@@ -36,16 +36,18 @@ publishing {
                 }
             }
         }
-        maven {
-            name = "Sonatype"
-            if (project.ext.isReleaseVersion) {
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            } else {
-                url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-            }
-            credentials {
-                it.username = project.ext.ossrhUsername
-                it.password = project.ext.ossrhPassword
+        if (project.ext.has("ossrhUsername")) {
+            maven {
+                name = "Sonatype"
+                if (project.ext.isReleaseVersion) {
+                    url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                } else {
+                    url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                }
+                credentials {
+                    it.username = project.ext.ossrhUsername
+                    it.password = project.ext.ossrhPassword
+                }
             }
         }
     }
@@ -78,5 +80,8 @@ publishing {
 }
 
 signing {
+    setRequired {
+        project.ext.has("signing.keyId")
+    }
     sign(publishing.publications)
 }
