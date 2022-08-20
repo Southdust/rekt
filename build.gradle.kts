@@ -6,6 +6,9 @@ plugins {
 
 allprojects {
     repositories {
+        maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+            name = "Sonatype"
+        }
         mavenCentral()
     }
 }
