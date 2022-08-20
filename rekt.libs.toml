@@ -1,0 +1,20 @@
+[versions]
+kotlin = "1.7.20-Beta"
+coroutines = "1.6.4"
+serialization = "1.4.0-RC"
+redis-js = "4.2.0"
+
+[libraries]
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.4.0" }
+mockk = { module = "io.mockk:mockk", version = "1.12.5" }
+lettuce-core = { module = "io.lettuce:lettuce-core", version = "6.2.0.RELEASE" }
+data-common = { module = "org.hexalite:stronghold-data-common", version = "0.1.0-SNAPSHOT" }
+
+[bundles]
+kotlin = ["kotlinx-serialization", "kotlinx-datetime", "kotlinx-coroutines"]
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

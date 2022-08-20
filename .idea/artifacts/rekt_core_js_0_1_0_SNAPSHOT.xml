@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="rekt-core-js-0.1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/rekt-core/build/libs</output-path>
+    <root id="archive" name="rekt-core-js-0.1.0-SNAPSHOT.jar">
+      <element id="module-output" name="rekt.rekt-core.jsMain" />
+    </root>
+  </artifact>
+</component>
