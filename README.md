@@ -7,7 +7,7 @@
 **⚠️ WARNING!** *This project is experimental and may be missing essential features. Please let us know if you found any
 issues or have any suggestions.*
 
-A Kotlin Multiplatform coroutines-based wrapper for popular platform-specific Redis client libraries.
+A multiplatform coroutine-based wrapper for popular platform-specific Redis client libraries.
 
 ## 📚 Getting Started
 
