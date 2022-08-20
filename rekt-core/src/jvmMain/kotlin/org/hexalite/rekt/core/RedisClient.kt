@@ -1,11 +1,14 @@
+@file:JvmName("RedisClientJvm")
+
 package org.hexalite.rekt.core
 
-import org.hexalite.stronghold.data.functional.Either
+import kotlinx.coroutines.flow.Flow
 import org.hexalite.rekt.core.command.RedisCommandsScope
 import org.hexalite.rekt.core.configuration.RedisConfiguration
 import org.hexalite.rekt.core.exception.CommandScopeNotAccessibleException
 import org.hexalite.rekt.core.exception.ConnectionFailedException
 import org.hexalite.rekt.core.exception.DisconnectionFailedException
+import org.hexalite.stronghold.data.functional.Either
 
 /**
  * Creates a new [RedisClient] instance from the given [configuration].
@@ -68,5 +71,4 @@ actual class RedisClient {
     actual fun isActive(): Boolean {
         TODO("Not yet implemented")
     }
-
 }

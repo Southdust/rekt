@@ -1,5 +1,6 @@
 package org.hexalite.rekt.core
 
+import kotlinx.coroutines.flow.Flow
 import org.hexalite.stronghold.data.functional.Either
 import org.hexalite.rekt.core.command.RedisCommandsScope
 import org.hexalite.rekt.core.configuration.RedisConfiguration
@@ -68,5 +69,4 @@ actual class RedisClient {
     actual fun isActive(): Boolean {
         TODO("Not yet implemented")
     }
-
 }
