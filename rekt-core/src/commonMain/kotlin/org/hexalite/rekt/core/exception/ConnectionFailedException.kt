@@ -5,5 +5,5 @@ package org.hexalite.rekt.core.exception
  * usually added to the platform this is running to show from what library this error is coming from exactly.
  * @author FromSyntax
  */
-data class ConnectionFailedException(override val message: String, override val cause: Throwable? = null) :
+public data class ConnectionFailedException(override val message: String, override val cause: Throwable? = null) :
     RuntimeException(message, cause)

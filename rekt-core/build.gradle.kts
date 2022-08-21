@@ -8,11 +8,13 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(rekt.data.common)
+                implementation(rekt.kotlin.logging)
             }
         }
         val jvmMain by getting {
             dependencies {
                 implementation(rekt.lettuce.core)
+                implementation(rekt.kotlinx.coroutines.jdk8)
             }
         }
     }

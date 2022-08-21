@@ -11,7 +11,7 @@ import org.hexalite.rekt.core.exception.DisconnectionFailedException
 /**
  * Creates a new [RedisClient] instance from the given [configuration].
  */
-actual fun RedisClient(configuration: RedisConfiguration): RedisClient {
+public actual fun RedisClient(configuration: RedisConfiguration): RedisClient {
     TODO("Not yet implemented")
 }
 
@@ -35,14 +35,22 @@ actual fun RedisClient(configuration: RedisConfiguration): RedisClient {
  * available on our interfaces, you could use [RedisCommandsScope.raw] to run any commands that aren't exposed by yourself.
  *
  * @author FromSyntax
+ * @author Gabriel
  */
-actual class RedisClient {
+public actual class RedisClient {
+    /**
+     * Returns the configuration for this [RedisClient].
+     */
+    public actual fun configuration(): RedisConfiguration {
+        TODO("Not yet implemented")
+    }
+
     /**
      * Creates a connection to Redis and alter the state of this client to connected, therefore allowing the
      * [commands scope][commands] to be accessible. Any errors are be bound to the right side of the returned
      * [Either] type.
      */
-    actual suspend fun connect(): Either<Unit, ConnectionFailedException> {
+    public actual suspend fun connect(): Either<Unit, ConnectionFailedException> {
         TODO("Not yet implemented")
     }
 
@@ -51,7 +59,7 @@ actual class RedisClient {
      * it will make the [commands scope][commands] be unavailable. Any errors are be bound to the right side of
      * the returned [Either] type.
      */
-    actual suspend fun disconnect(): Either<Unit, DisconnectionFailedException> {
+    public actual suspend fun disconnect(): Either<Unit, DisconnectionFailedException> {
         TODO("Not yet implemented")
     }
 
@@ -59,14 +67,20 @@ actual class RedisClient {
      * Creates a new commands scope from the active connection, or bound an error to the right of the returned
      * [Either] type if not available.
      */
-    actual fun commands(): Either<RedisCommandsScope, CommandScopeNotAccessibleException> {
+    public actual fun commands(): Either<RedisCommandsScope, CommandScopeNotAccessibleException> {
         TODO("Not yet implemented")
     }
 
     /**
      * Returns whether this [RedisClient] is at an active (connected) state.
      */
-    actual fun isActive(): Boolean {
+    public actual fun isActive(): Boolean {
         TODO("Not yet implemented")
+    }
+
+    /**
+     * All stuff that do not require an instance of [RedisClient] directly.
+     */
+    public actual companion object {
     }
 }

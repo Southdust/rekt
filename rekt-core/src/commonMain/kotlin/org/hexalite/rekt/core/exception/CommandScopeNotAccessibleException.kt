@@ -6,7 +6,7 @@ package org.hexalite.rekt.core.exception
  * * [Disconnected] - Cannot access command scope while the Redis client connection is not active.
  * @author FromSyntax
  */
-sealed class CommandScopeNotAccessibleException(override val message: String, override val cause: Throwable? = null) :
+public sealed class CommandScopeNotAccessibleException(override val message: String, override val cause: Throwable? = null) :
     RuntimeException(message, cause) {
-    object Disconnected : CommandScopeNotAccessibleException("Cannot access command scope while disconnected.")
+    public object Disconnected : CommandScopeNotAccessibleException("Cannot access command scope while disconnected.")
 }

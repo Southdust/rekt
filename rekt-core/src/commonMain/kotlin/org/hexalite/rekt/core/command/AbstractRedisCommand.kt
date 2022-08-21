@@ -13,11 +13,12 @@ import org.hexalite.rekt.core.exception.RedisCommandFailedException
  * The type that this command would return if successful.
  *
  * @author FromSyntax
+ * @author Gabriel
  */
-abstract class AbstractRedisCommand<T: AbstractRedisContext, R> {
+public abstract class AbstractRedisCommand<T: AbstractRedisContext, R> {
     /**
      * Executes this command at the given [context], if the connection is currently active.
      * @param context
      */
-    abstract suspend fun execute(context: T): Either<R, RedisCommandFailedException>
+    public abstract suspend fun execute(context: T): Either<R, RedisCommandFailedException>
 }

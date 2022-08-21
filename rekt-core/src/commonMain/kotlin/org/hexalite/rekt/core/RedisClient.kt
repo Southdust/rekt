@@ -8,18 +8,26 @@ import org.hexalite.rekt.core.configuration.RedisConfiguration
 import org.hexalite.rekt.core.exception.CommandScopeNotAccessibleException
 import org.hexalite.rekt.core.exception.ConnectionFailedException
 import org.hexalite.rekt.core.exception.DisconnectionFailedException
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * Creates a new [RedisClient] instance from the given [configuration].
  */
-expect fun RedisClient(configuration: RedisConfiguration): RedisClient
+public expect fun RedisClient(configuration: RedisConfiguration): RedisClient
 
 /**
  * Creates a new [RedisClient] instance from the configuration built from the given [builder].
  */
 @RedisDsl
-inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient =
+@OptIn(ExperimentalContracts::class)
+public inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     RedisClient(RedisConfiguration().apply(builder))
+}
 
 /**
  * A multiplatform coroutine-based wrapper for popular Redis clients based on JavaScript and JVM technologies:
@@ -42,30 +50,42 @@ inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient =
  * available on our interfaces, you could use [RedisCommandsScope.raw] to run any commands that aren't exposed by yourself.
  *
  * @author FromSyntax
+ * @author Gabriel
  */
-expect class RedisClient {
+public expect class RedisClient {
+    /**
+     * Returns the configuration for this [RedisClient].
+     */
+    public fun configuration(): RedisConfiguration
+
     /**
      * Creates a connection to Redis and alter the state of this client to connected, therefore allowing the
      * [commands scope][commands] to be accessible. Any errors are be bound to the right side of the returned
      * [Either] type.
      */
-    suspend fun connect(): Either<Unit, ConnectionFailedException>
+    public suspend fun connect(): Either<Unit, ConnectionFailedException>
 
     /**
      * Closes the active Redis connection and alter the state of client to disconnected. Is worth nothing that
      * it will make the [commands scope][commands] be unavailable. Any errors are be bound to the right side of
      * the returned [Either] type.
      */
-    suspend fun disconnect(): Either<Unit, DisconnectionFailedException>
+    public suspend fun disconnect(): Either<Unit, DisconnectionFailedException>
 
     /**
      * Creates a new commands scope from the active connection, or bound an error to the right of the returned
      * [Either] type if not available.
      */
-    fun commands(): Either<RedisCommandsScope, CommandScopeNotAccessibleException>
+    public fun commands(): Either<RedisCommandsScope, CommandScopeNotAccessibleException>
 
     /**
      * Returns whether this [RedisClient] is at an active (connected) state.
      */
-    fun isActive(): Boolean
+    public fun isActive(): Boolean
+
+    /**
+     * All stuff that do not require an instance of [RedisClient] directly.
+     */
+    public companion object {
+    }
 }

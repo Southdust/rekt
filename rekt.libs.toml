@@ -5,15 +5,17 @@ serialization = "1.4.0-RC"
 redis-js = "4.2.0"
 
 [libraries]
-kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
+kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "serialization" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.4.0" }
 mockk = { module = "io.mockk:mockk", version = "1.12.5" }
 lettuce-core = { module = "io.lettuce:lettuce-core", version = "6.2.0.RELEASE" }
 data-common = { module = "org.hexalite:stronghold-data-common", version = "0.1.0-SNAPSHOT" }
+kotlin-logging = { module = "io.github.microutils:kotlin-logging", version = "2.1.23" }
 
 [bundles]
-kotlin = ["kotlinx-serialization", "kotlinx-datetime", "kotlinx-coroutines"]
+kotlin = ["kotlinx-serialization-cbor", "kotlinx-datetime", "kotlinx-coroutines"]
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

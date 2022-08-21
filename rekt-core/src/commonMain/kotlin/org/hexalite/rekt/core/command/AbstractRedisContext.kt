@@ -6,6 +6,9 @@ import org.hexalite.rekt.core.RedisClient
  * A generic type for which context data is required to execute an implemented command.
  * @author FromSyntax
  */
-abstract class AbstractRedisContext {
-    abstract val client: RedisClient
+public abstract class AbstractRedisContext {
+    /**
+     * The [client][RedisClient] this command context is bound to.
+     */
+    public abstract val client: RedisClient
 }

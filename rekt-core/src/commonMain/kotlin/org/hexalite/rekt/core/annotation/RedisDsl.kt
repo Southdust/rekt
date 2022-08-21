@@ -6,4 +6,4 @@ package org.hexalite.rekt.core.annotation
  */
 @DslMarker
 @Target(AnnotationTarget.FUNCTION)
-annotation class RedisDsl
+public annotation class RedisDsl

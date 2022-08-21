@@ -7,10 +7,10 @@ package org.hexalite.rekt.core.exception
  * * [NotConnected] - Can't close a connection that isn't open
  * @author FromSyntax
  */
-sealed class DisconnectionFailedException(override val message: String, override val cause: Throwable? = null) :
+public sealed class DisconnectionFailedException(override val message: String, override val cause: Throwable? = null) :
     RuntimeException(message, cause) {
-    object NotConnected : DisconnectionFailedException("Can't close a connection that isn't open.")
+    public object NotConnected : DisconnectionFailedException("Can't close a connection that isn't open.")
 
-    data class Custom(override val message: String, override val cause: Throwable? = null) :
+    public data class Custom(override val message: String, override val cause: Throwable? = null) :
         DisconnectionFailedException(message, cause)
 }
