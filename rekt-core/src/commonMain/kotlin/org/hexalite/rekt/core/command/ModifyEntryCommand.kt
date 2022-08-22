@@ -5,6 +5,7 @@ import org.hexalite.rekt.core.RedisClient
 
 /**
  * The context required to instruct the client to modify an entry.
+ *
  * @author FromSyntax
  * @author Gabriel
  */

@@ -11,6 +11,7 @@ import kotlin.jvm.JvmInline
 /**
  * A convenient wrapper for the most common Redis commands with direct support for kotlinx.serialization. This can
  * be easily accessed by a [RedisClient] at an active state.
+ *
  * @author FromSyntax
  * @author Gabriel
  */
@@ -18,7 +19,7 @@ import kotlin.jvm.JvmInline
 @JvmInline
 public value class RedisCommandsScope(public val client: RedisClient) {
     /**
-     * Instructs the [client] to dispatch a command to its platform-specific underlying Redis library.
+     * Instructs the [client] to dispatch a command to its platform-specific underlying Redis library
      * @param command
      * @param context
      */
@@ -58,8 +59,21 @@ public value class RedisCommandsScope(public val client: RedisClient) {
         key: String,
         value: T,
         serializer: KSerializer<T>
-    ): Either<T, RedisCommandFailedException> = dispatch(
-        ModifyEntryCommand,
-        ModifyEntryContext(client, key, value, serializer) as ModifyEntryContext<Any>
-    ).mapLeft { it as T }
+    ): Either<T, RedisCommandFailedException> =
+        dispatch(
+            ModifyEntryCommand,
+            ModifyEntryContext(client, key, value, serializer) as ModifyEntryContext<Any>
+        ).mapLeft { it as T }
+
+    /**
+     * Dispatches a [AuthenticationCommand] in order to authenticate with a [password], and an [username]
+     * if provided.
+     * @param username
+     * @param password
+     */
+    public suspend inline fun authenticate(
+        username: String? = null,
+        password: CharSequence
+    ): Either<String, RedisCommandFailedException> =
+        dispatch(AuthenticationCommand, AuthenticationContext(client, username, password))
 }

@@ -15,7 +15,7 @@ import org.hexalite.stronghold.data.functional.Either.Companion.either
 public actual object ModifyEntryCommand : AbstractRedisCommand<ModifyEntryContext<Any>, Any?>() {
     @Suppress("NOTHING_TO_INLINE")
     private inline fun error(): RedisCommandFailedException = RedisCommandFailedException
-        .Custom("Failed to execute SET command.")
+        .Default(this::class, "SET")
 
     @OptIn(ExperimentalLettuceCoroutinesApi::class)
     override suspend fun execute(context: ModifyEntryContext<Any>): Either<Any?, RedisCommandFailedException> {

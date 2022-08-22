@@ -16,5 +16,10 @@ kotlin {
                 implementation(rekt.lettuce.core)
             }
         }
+        val jsMain by getting {
+            dependencies {
+                implementation(npm("redis", rekt.versions.redis.js.get()))
+            }
+        }
     }
 }

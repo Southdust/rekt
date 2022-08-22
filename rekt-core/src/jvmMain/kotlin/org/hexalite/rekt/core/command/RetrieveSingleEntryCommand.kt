@@ -16,7 +16,7 @@ import sun.jvm.hotspot.oops.CellTypeState.value
 public actual object RetrieveSingleEntryCommand : AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any?>() {
     @Suppress("NOTHING_TO_INLINE")
     private inline fun error(): RedisCommandFailedException = RedisCommandFailedException
-        .Custom("Failed to execute GET command.")
+        .Default(this::class, "GET")
 
     @OptIn(ExperimentalLettuceCoroutinesApi::class)
     override suspend fun execute(context: RetrieveSingleEntryContext<Any>): Either<Any?, RedisCommandFailedException> {
