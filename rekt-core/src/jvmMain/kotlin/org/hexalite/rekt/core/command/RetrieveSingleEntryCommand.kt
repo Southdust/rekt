@@ -1,7 +1,10 @@
 package org.hexalite.rekt.core.command
 
+import io.lettuce.core.ExperimentalLettuceCoroutinesApi
 import org.hexalite.rekt.core.exception.RedisCommandFailedException
 import org.hexalite.stronghold.data.functional.Either
+import org.hexalite.stronghold.data.functional.Either.Companion.either
+import sun.jvm.hotspot.oops.CellTypeState.value
 
 
 /**
@@ -10,14 +13,20 @@ import org.hexalite.stronghold.data.functional.Either
  * @author FromSyntax
  * @author Gabriel
  */
-public actual object RetrieveSingleEntryCommand : AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any>() {
-    override suspend fun execute(context: RetrieveSingleEntryContext<Any>): Either<Any, RedisCommandFailedException> {
-        val value = context.client.commands?.get(context.key)
-            ?: return Either.right(RedisCommandFailedException.Custom("Failed to execute GET command."))
-        return Either.left(context.client
-            .configuration
-            .dispatching
-            .serializationFormat
-            .decodeFromString(context.deserializer, value))
+public actual object RetrieveSingleEntryCommand : AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any?>() {
+    @Suppress("NOTHING_TO_INLINE")
+    private inline fun error(): RedisCommandFailedException = RedisCommandFailedException
+        .Custom("Failed to execute GET command.")
+
+    @OptIn(ExperimentalLettuceCoroutinesApi::class)
+    override suspend fun execute(context: RetrieveSingleEntryContext<Any>): Either<Any?, RedisCommandFailedException> {
+        return context.client.commands?.get(context.key).either(::error)
+            .mapLeft {
+                context.client
+                    .configuration
+                    .dispatching
+                    .serializationFormat
+                    .decodeFromString(context.deserializer, it)
+            }
     }
 }

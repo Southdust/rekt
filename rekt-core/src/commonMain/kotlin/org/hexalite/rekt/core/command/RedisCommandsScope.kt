@@ -41,7 +41,7 @@ public value class RedisCommandsScope(public val client: RedisClient) {
     public suspend inline fun <T : Any> find(
         key: String,
         deserializer: DeserializationStrategy<T>
-    ): Either<T, RedisCommandFailedException> =
+    ): Either<T?, RedisCommandFailedException> =
         dispatch(
             RetrieveSingleEntryCommand,
             RetrieveSingleEntryContext(client, key, deserializer) as RetrieveSingleEntryContext<Any>

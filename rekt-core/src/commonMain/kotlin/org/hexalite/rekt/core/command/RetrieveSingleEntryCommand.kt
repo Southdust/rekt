@@ -21,5 +21,5 @@ public data class RetrieveSingleEntryContext<T>(
  * @author FromSyntax
  * @author Gabriel
  */
-public expect object RetrieveSingleEntryCommand: AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any>
+public expect object RetrieveSingleEntryCommand: AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any?>
 

@@ -9,8 +9,8 @@ import org.hexalite.stronghold.data.functional.Either
  * @author FromSyntax
  * @author Gabriel
  */
-public actual object RetrieveSingleEntryCommand : AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any>() {
-    override suspend fun execute(context: RetrieveSingleEntryContext<Any>): Either<Any, RedisCommandFailedException> {
+public actual object RetrieveSingleEntryCommand : AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any?>() {
+    override suspend fun execute(context: RetrieveSingleEntryContext<Any>): Either<Any?, RedisCommandFailedException> {
         TODO("Not yet implemented")
     }
 }
