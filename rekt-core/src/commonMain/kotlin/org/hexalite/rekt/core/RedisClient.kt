@@ -1,6 +1,7 @@
 package org.hexalite.rekt.core
 
 import kotlinx.coroutines.flow.Flow
+import mu.KLogger
 import org.hexalite.stronghold.data.functional.Either
 import org.hexalite.rekt.core.annotation.RedisDsl
 import org.hexalite.rekt.core.command.RedisCommandsScope
@@ -53,6 +54,8 @@ public inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient {
  * @author Gabriel
  */
 public expect class RedisClient {
+    internal val logger: KLogger?
+
     /**
      * Returns the configuration for this [RedisClient].
      */

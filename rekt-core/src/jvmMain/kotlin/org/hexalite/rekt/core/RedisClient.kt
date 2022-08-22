@@ -54,8 +54,7 @@ public typealias JvmRedisConnection = StatefulRedisConnection<String, String>
  * @author Gabriel
  */
 public actual class RedisClient internal constructor(public val configuration: RedisConfiguration, unit: Unit) {
-    @Suppress("RedundantNullableReturnType")
-    internal val logger: KLogger? = KotlinLogging.logger {}
+    internal actual val logger: KLogger? = KotlinLogging.logger {}
         get() {
             if (!configuration.enableLogging) {
                 return null

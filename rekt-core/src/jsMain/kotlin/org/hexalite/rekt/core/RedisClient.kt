@@ -1,6 +1,8 @@
 package org.hexalite.rekt.core
 
 import kotlinx.coroutines.flow.Flow
+import mu.KLogger
+import mu.KotlinLogging
 import org.hexalite.stronghold.data.functional.Either
 import org.hexalite.rekt.core.command.RedisCommandsScope
 import org.hexalite.rekt.core.configuration.RedisConfiguration
@@ -37,7 +39,21 @@ public actual fun RedisClient(configuration: RedisConfiguration): RedisClient {
  * @author FromSyntax
  * @author Gabriel
  */
-public actual class RedisClient {
+public actual class RedisClient(public val configuration: RedisConfiguration, unit: Unit) {
+    internal actual val logger: KLogger? = KotlinLogging.logger {}
+        get() {
+            if (!configuration.enableLogging) {
+                return null
+            }
+            return field
+        }
+
+    /**
+     * All stuff that do not require an instance of [RedisClient] directly.
+     */
+    public actual companion object {
+    }
+
     /**
      * Returns the configuration for this [RedisClient].
      */
@@ -78,11 +94,5 @@ public actual class RedisClient {
      */
     public actual fun isActive(): Boolean {
         TODO("Not yet implemented")
-    }
-
-    /**
-     * All stuff that do not require an instance of [RedisClient] directly.
-     */
-    public actual companion object {
     }
 }

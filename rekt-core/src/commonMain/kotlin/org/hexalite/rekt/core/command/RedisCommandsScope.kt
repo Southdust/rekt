@@ -28,7 +28,9 @@ public value class RedisCommandsScope(public val client: RedisClient) {
         context: T
     ): Either<R, RedisCommandFailedException> = withTimeoutOrNull(client.configuration().dispatching.timeout) {
         try {
-            command.execute(context)
+            command.execute(context).also {
+                client.logger?.debug { "Successfully dispatched a '${command::class.simpleName}' command." }
+            }
         } catch (exception: Exception) {
             Either.right(RedisCommandFailedException.Exception(exception))
         }
