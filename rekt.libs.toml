@@ -20,6 +20,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
 kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.0" }
 
 [bundles]
 kotlin = ["kotlinx-serialization-cbor", "kotlinx-datetime", "kotlinx-coroutines"]
@@ -28,4 +29,3 @@ kotest = ["kotest-assertions-core", "kotest-property", "kotest-framework-engine"
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }

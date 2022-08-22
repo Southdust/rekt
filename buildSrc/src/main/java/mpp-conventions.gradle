@@ -1,7 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.multiplatform'
     id 'org.jetbrains.kotlin.plugin.serialization'
-    id 'io.kotest.multiplatform'
 }
 
 kotlin {
@@ -56,11 +55,7 @@ kotlin {
         jvmTest {
             dependencies {
                 implementation rekt.kotest.runner.junit5
-            }
-        }
-        jsTest {
-            dependencies {
-                implementation kotlin('test-js')
+                implementation rekt.slf4j.simple
             }
         }
     }
