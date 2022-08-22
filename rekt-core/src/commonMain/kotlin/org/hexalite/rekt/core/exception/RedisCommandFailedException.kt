@@ -10,8 +10,8 @@ public sealed class RedisCommandFailedException(override val message: String, ov
     public data class Exception(override val cause: Throwable? = null) :
         RedisCommandFailedException("An exception was throwing during the dispatch execution", cause)
 
-    public data class Default(val `class`: KClass<*>, val name: String) :
-        RedisCommandFailedException("Failed to execute '${`class`.simpleName}' [$name].")
+    public data class Default(val `class`: KClass<*>, val name: String, override val message: String = "") :
+        RedisCommandFailedException("Failed to execute '${`class`.simpleName}' [$name]. $message")
 
     public companion object {
         public val Disconnected: Exception = Exception(CommandScopeNotAccessibleException.Disconnected)

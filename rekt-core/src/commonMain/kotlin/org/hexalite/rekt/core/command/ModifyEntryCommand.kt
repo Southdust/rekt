@@ -13,7 +13,8 @@ public data class ModifyEntryContext<T>(
     override val client: RedisClient,
     val key: String,
     val value: T,
-    val serializer: KSerializer<T>
+    val serializer: KSerializer<T>,
+    val previousValueSerializer: KSerializer<T> = serializer
 ) : AbstractRedisContext()
 
 /**

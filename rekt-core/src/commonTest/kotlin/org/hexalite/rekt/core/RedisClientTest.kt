@@ -11,17 +11,13 @@ import org.hexalite.rekt.core.util.shouldBeLeft
 
 class RedisClientTest : StringSpec({
     val enabled = env("REDIS_CLIENT_TEST_ENABLED") == "true"
-    lateinit var redis: RedisClient
-
-    beforeTest {
-        redis = redis {
-            connection {
-                address {
-                    hostname = env("REDIS_HOST") ?: "127.0.0.1"
-                    port = env("REDIS_PORT")?.toShort() ?: 6379
-                    password = env("REDIS_PASSWORD") ?: "password"
-                    username = env("REDIS_USERNAME")
-                }
+    val redis = redis {
+        connection {
+            address {
+                hostname = env("REDIS_HOST") ?: "127.0.0.1"
+                port = env("REDIS_PORT")?.toShort() ?: 6379
+                password = env("REDIS_PASSWORD") ?: "password"
+                username = env("REDIS_USERNAME")
             }
         }
     }

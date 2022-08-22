@@ -9,13 +9,15 @@ import org.hexalite.rekt.core.configuration.RedisConfiguration
 import org.hexalite.rekt.core.exception.CommandScopeNotAccessibleException
 import org.hexalite.rekt.core.exception.ConnectionFailedException
 import org.hexalite.rekt.core.exception.DisconnectionFailedException
+import org.hexalite.rekt.core.js.external.NodeRedisClient
+import org.hexalite.rekt.core.js.external.NodeRedisClientOptions
+import org.hexalite.rekt.core.js.external.createNodeRedisClient
 
 /**
  * Creates a new [RedisClient] instance from the given [configuration].
  */
-public actual fun RedisClient(configuration: RedisConfiguration): RedisClient {
-    TODO("Not yet implemented")
-}
+public actual fun RedisClient(configuration: RedisConfiguration): RedisClient =
+    RedisClient(configuration, Unit)
 
 /**
  * A multiplatform coroutine-based wrapper for popular Redis clients based on JavaScript and JVM technologies:
@@ -39,7 +41,7 @@ public actual fun RedisClient(configuration: RedisConfiguration): RedisClient {
  * @author FromSyntax
  * @author Gabriel
  */
-public actual class RedisClient(public val configuration: RedisConfiguration, unit: Unit) {
+public actual class RedisClient internal constructor(public val configuration: RedisConfiguration, unit: Unit) {
     internal actual val logger: KLogger? = KotlinLogging.logger {}
         get() {
             if (!configuration.enableLogging) {
@@ -54,12 +56,12 @@ public actual class RedisClient(public val configuration: RedisConfiguration, un
     public actual companion object {
     }
 
+    internal var delegate: NodeRedisClient? = null
+
     /**
      * Returns the configuration for this [RedisClient].
      */
-    public actual fun configuration(): RedisConfiguration {
-        TODO("Not yet implemented")
-    }
+    public actual fun configuration(): RedisConfiguration = configuration
 
     /**
      * Creates a connection to Redis and alter the state of this client to connected, therefore allowing the
@@ -67,7 +69,10 @@ public actual class RedisClient(public val configuration: RedisConfiguration, un
      * [Either] type.
      */
     public actual suspend fun connect(): Either<RedisClient, ConnectionFailedException> {
-        TODO("Not yet implemented")
+        val options = Any().unsafeCast<NodeRedisClientOptions>().apply {
+            url = configuration.connection.address.toString()
+        }
+        delegate = createNodeRedisClient(options)
         return Either.left(this)
     }
 
@@ -77,7 +82,8 @@ public actual class RedisClient(public val configuration: RedisConfiguration, un
      * the returned [Either] type.
      */
     public actual suspend fun disconnect(): Either<RedisClient, DisconnectionFailedException> {
-        TODO("Not yet implemented")
+        delegate?.disconnect()
+        delegate = null
         return Either.left(this)
     }
 
@@ -85,14 +91,15 @@ public actual class RedisClient(public val configuration: RedisConfiguration, un
      * Creates a new commands scope from the active connection, or bound an error to the right of the returned
      * [Either] type if not available.
      */
-    public actual fun commands(): Either<RedisCommandsScope, CommandScopeNotAccessibleException> {
-        TODO("Not yet implemented")
+    public actual fun commands(): Either<RedisCommandsScope, CommandScopeNotAccessibleException>  {
+        if (!isActive()) {
+            return Either.right(CommandScopeNotAccessibleException.Disconnected)
+        }
+        return Either.left(RedisCommandsScope(this))
     }
 
     /**
      * Returns whether this [RedisClient] is at an active (connected) state.
      */
-    public actual fun isActive(): Boolean {
-        TODO("Not yet implemented")
-    }
+    public actual fun isActive(): Boolean = delegate != null
 }

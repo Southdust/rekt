@@ -14,7 +14,7 @@ import kotlin.jvm.JvmName
  * Dispatches a [RetrieveSingleEntryCommand] in order to retrieve an entry from the Redis map-like storage.
  * @param key
  */
-public suspend inline fun <reified T : Any> RedisCommandsScope.find(key: String): Either<T, RedisCommandFailedException> =
+public suspend inline fun <reified T : Any> RedisCommandsScope.find(key: String): Either<T?, RedisCommandFailedException> =
     find(key, serializer())
 
 /**

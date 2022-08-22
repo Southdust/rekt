@@ -58,6 +58,11 @@ kotlin {
                 implementation rekt.kotest.runner.junit5
             }
         }
+        jsTest {
+            dependencies {
+                implementation kotlin('test-js')
+            }
+        }
     }
     explicitApi()
 }
