@@ -29,3 +29,4 @@ kotest = ["kotest-assertions-core", "kotest-property", "kotest-framework-engine"
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }

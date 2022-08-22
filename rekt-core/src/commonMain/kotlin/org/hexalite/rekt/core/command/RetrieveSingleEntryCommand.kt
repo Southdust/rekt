@@ -22,4 +22,3 @@ public data class RetrieveSingleEntryContext<T>(
  * @author Gabriel
  */
 public expect object RetrieveSingleEntryCommand: AbstractRedisCommand<RetrieveSingleEntryContext<Any>, Any?>
-

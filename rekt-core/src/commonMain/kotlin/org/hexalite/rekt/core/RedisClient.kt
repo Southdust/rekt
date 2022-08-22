@@ -19,7 +19,9 @@ import kotlin.contracts.contract
 public expect fun RedisClient(configuration: RedisConfiguration): RedisClient
 
 /**
- * Creates a new [RedisClient] instance from the configuration built from the given [builder].
+ * Creates a new [RedisClient] instance from the configuration built from the given [builder]. This works
+ * by creating an empty configuration then applying the [builder] DSL to it then passing it as argument to
+ * the [RedisClient] constructor.
  */
 @RedisDsl
 @OptIn(ExperimentalContracts::class)
@@ -34,12 +36,28 @@ public inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient {
  * A multiplatform coroutine-based wrapper for popular Redis clients based on JavaScript and JVM technologies:
  * [`node-redis`](https://github.com/redis/node-redis), [`lettuce-core`](https://github.com/lettuce-io/lettuce-core).
  *
- * ### Fundaments of this library
+ * ### Fundamentals of this library
  *
- * The fundamental concept of this library is being able to access Redis from most common Kotlin platforms in a
- * convenient way and being able to gain readability, flexibility through coroutines and serialization support, and
- * having total understanding of how this library works since it would everything public would be 100% documented. This
- * of course includes using reactive-like and functional-inspired functions, such as [Either] and [Flow].
+ * The fundamental concepts of this library are being able to access Redis from most common Kotlin platforms in a
+ * convenient way while still being able to have readability and flexibility through coroutines and serialization
+ * support. This of course includes using reactive-like and functional-inspired types, such as [Either] and [Flow].
+ * Of course, we couldn't forget about the big plus that is having total understanding of how this library works
+ * through the power of documentation.
+ *
+ * ### Limitations
+ *
+ * There are a few things that can't make we extract all of our spare time to focus on software like this and instead
+ * may limit the experience of development for both us, maintainers of this library, and you users of this library:
+ * * [kotest/kotest#3059](https://github.com/kotest/kotest/issues/3059) - This limits testing for us in Kotlin for
+ *   JavaScript platforms.
+ * * Context receivers do not work with Kotlin for JavaScript platforms in the latest Kotlin/Multiplatform
+ *   1.7.20-Beta.
+ * * The limited amount of contributors. At the time this documentation is being written, there are only 2
+ *   developers dedicating their spare time to maintain this library.
+ * * **At the moment, only a few features are implemented.** Since this library is relatively new, for now there are
+ *   only a few commands implemented. Of course, we are planning to increase the amount of commands, but this doesn't
+ *   mean you can't implement them by your own or simply using [RedisCommandsScope.raw]!
+ *
  *
  * ### Getting Started
  *
@@ -76,13 +94,15 @@ public expect class RedisClient {
     public suspend fun disconnect(): Either<RedisClient, DisconnectionFailedException>
 
     /**
-     * Creates a new commands scope from the active connection, or bound an error to the right of the returned
-     * [Either] type if not available.
+     * Creates a new commands scope from the active connection, or bound an error to the right side of the
+     * returned [Either] type if not available.
      */
     public fun commands(): Either<RedisCommandsScope, CommandScopeNotAccessibleException>
 
     /**
-     * Returns whether this [RedisClient] is at an active (connected) state.
+     * Returns whether this [RedisClient] is at an active (connected) state. If possible, it will check the
+     * activeness state of the underlying/delegated (platform-specific) client, or simply check if the delegate is
+     * not null.
      */
     public fun isActive(): Boolean
 
