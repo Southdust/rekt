@@ -18,7 +18,7 @@ import kotlin.jvm.JvmInline
 @JvmInline
 public value class RedisCommandsScope(public val client: RedisClient) {
     /**
-     * Instructsthe [client] to dispatch a command to its platform-specific underlying Redis library.
+     * Instructs the [client] to dispatch a command to its platform-specific underlying Redis library.
      * @param command
      * @param context
      */
@@ -49,6 +49,7 @@ public value class RedisCommandsScope(public val client: RedisClient) {
 
     /**
      * Dispatches a [ModifyEntryCommand] in order to modify an entry at the Redis map-like storage.
+     * @returns The previous set at this entry or null.
      * @param key
      * @param value
      * @param serializer

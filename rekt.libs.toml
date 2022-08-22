@@ -3,20 +3,29 @@ kotlin = "1.7.20-Beta"
 coroutines = "1.6.4"
 serialization = "1.4.0-RC"
 redis-js = "4.2.0"
+kotest = "5.4.2"
 
 [libraries]
 kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "serialization" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "coroutines" }
+kotlinx-coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.4.0" }
-mockk = { module = "io.mockk:mockk", version = "1.12.5" }
+mockk = { module = "io.mockk:mockk-common", version = "1.12.5" }
 lettuce-core = { module = "io.lettuce:lettuce-core", version = "6.2.0.RELEASE" }
 data-common = { module = "org.hexalite:stronghold-data-common", version = "0.1.0-SNAPSHOT" }
 kotlin-logging = { module = "io.github.microutils:kotlin-logging", version = "2.1.23" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
 [bundles]
 kotlin = ["kotlinx-serialization-cbor", "kotlinx-datetime", "kotlinx-coroutines"]
+kotest = ["kotest-assertions-core", "kotest-property", "kotest-framework-engine", "kotest-framework-datatest"]
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }

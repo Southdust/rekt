@@ -4,6 +4,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.cbor.Cbor
 import org.hexalite.rekt.core.RedisClient
+import org.hexalite.rekt.core.annotation.RedisDsl
 import org.hexalite.rekt.core.serialization.HexCbor
 import org.hexalite.rekt.core.util.RedisAddress
 import kotlin.time.Duration
@@ -20,7 +21,17 @@ public data class RedisConfiguration(
     val connection: ConnectionSettings = ConnectionSettings(),
     val dispatching: DispatchingConfiguration = DispatchingConfiguration(),
     var enableLogging: Boolean = true,
-)
+) {
+    @RedisDsl
+    public inline fun dispatching(builder: DispatchingConfiguration.() -> Unit) {
+        dispatching.apply(builder)
+    }
+
+    @RedisDsl
+    public inline fun connection(builder: ConnectionSettings.() -> Unit) {
+        connection.apply(builder)
+    }
+}
 
 /**
  * A data class representing specific configurations to initialize a [RedisClient] connection.
@@ -31,9 +42,14 @@ public data class RedisConfiguration(
  */
 public data class ConnectionSettings(
     var address: RedisAddress = RedisAddress.Localhost,
-    var password: String? = null,
     var timeout: Duration = 30.seconds,
-)
+) {
+    @RedisDsl
+    public inline fun address(builder: RedisAddress.Conventional.() -> Unit): RedisAddress {
+        address = RedisAddress(builder)
+        return address
+    }
+}
 
 /**
  * A data class representing specific configurations to dispatch commands to a [RedisClient] connection.

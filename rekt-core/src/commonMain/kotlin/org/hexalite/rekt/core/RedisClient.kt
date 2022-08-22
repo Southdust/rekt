@@ -26,7 +26,7 @@ public inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    RedisClient(RedisConfiguration().apply(builder))
+    return RedisClient(RedisConfiguration().apply(builder))
 }
 
 /**
@@ -63,14 +63,14 @@ public expect class RedisClient {
      * [commands scope][commands] to be accessible. Any errors are be bound to the right side of the returned
      * [Either] type.
      */
-    public suspend fun connect(): Either<Unit, ConnectionFailedException>
+    public suspend fun connect(): Either<RedisClient, ConnectionFailedException>
 
     /**
      * Closes the active Redis connection and alter the state of client to disconnected. Is worth nothing that
      * it will make the [commands scope][commands] be unavailable. Any errors are be bound to the right side of
      * the returned [Either] type.
      */
-    public suspend fun disconnect(): Either<Unit, DisconnectionFailedException>
+    public suspend fun disconnect(): Either<RedisClient, DisconnectionFailedException>
 
     /**
      * Creates a new commands scope from the active connection, or bound an error to the right of the returned

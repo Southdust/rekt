@@ -70,8 +70,7 @@ public actual class RedisClient internal constructor(public val configuration: R
         public inline val codec: StringCodec get() = StringCodec.UTF8
     }
 
-    internal var delegate: JvmRedisConnection? = null
-        private set
+    private var delegate: JvmRedisConnection? = null
 
     @OptIn(ExperimentalLettuceCoroutinesApi::class)
     internal var commands: RedisCoroutinesCommands<String, String>? = null
@@ -92,12 +91,12 @@ public actual class RedisClient internal constructor(public val configuration: R
      * [commands scope][commands] to be accessible. Any errors are be bound to the right side of the returned
      * [Either] type.
      */
-    public actual suspend fun connect(): Either<Unit, ConnectionFailedException> {
+    public actual suspend fun connect(): Either<RedisClient, ConnectionFailedException> {
         val client = JvmRedisClient.create()
         val uri = RedisURI.create(configuration.connection.address.toString())
         delegate = client.connectAsync(codec, uri).await()
         logger?.info { "Successfully established a connection to Redis." }
-        return Either.left(Unit)
+        return Either.left(this)
     }
 
     /**
@@ -105,11 +104,11 @@ public actual class RedisClient internal constructor(public val configuration: R
      * it will make the [commands scope][commands] be unavailable. Any errors are be bound to the right side of
      * the returned [Either] type.
      */
-    public actual suspend fun disconnect(): Either<Unit, DisconnectionFailedException> {
+    public actual suspend fun disconnect(): Either<RedisClient, DisconnectionFailedException> {
         delegate?.closeAsync()?.await()
         delegate = null
         logger?.info { "Successfully closed the connection with Redis." }
-        return Either.left(Unit)
+        return Either.left(this)
     }
 
     /**

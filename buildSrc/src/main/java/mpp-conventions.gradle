@@ -1,20 +1,33 @@
 plugins {
     id 'org.jetbrains.kotlin.multiplatform'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'io.kotest.multiplatform'
 }
 
 kotlin {
-    jvm().compilations.all {
-        kotlinOptions {
-            freeCompilerArgs += ['-opt-in=kotlin.RequiresOptIn']
-            jvmTarget = '17'
-            apiVersion = '1.8'
-            languageVersion = '1.8'
+    jvm {
+        compilations.all {
+            kotlinOptions {
+                freeCompilerArgs += ['-opt-in=kotlin.RequiresOptIn']
+                jvmTarget = '17'
+                apiVersion = '1.8'
+                languageVersion = '1.8'
+            }
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
         }
     }
     js(IR) {
         nodejs()
         browser()
+    }
+    targets.all {
+        compilations.all {
+            kotlinOptions {
+                verbose = true
+            }
+        }
     }
     sourceSets {
         commonMain {
@@ -26,9 +39,23 @@ kotlin {
                 implementation rekt.bundles.kotlin
             }
         }
+        commonTest {
+            dependencies {
+                implementation rekt.bundles.kotest
+                implementation rekt.mockk
+                implementation kotlin('test-common')
+                implementation kotlin('test-annotations-common')
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation rekt.kotlinx.coroutines.jdk8
+                implementation rekt.kotlinx.coroutines.reactive
+            }
+        }
         jvmTest {
             dependencies {
-                implementation rekt.mockk
+                implementation rekt.kotest.runner.junit5
             }
         }
     }

@@ -50,8 +50,9 @@ public actual class RedisClient {
      * [commands scope][commands] to be accessible. Any errors are be bound to the right side of the returned
      * [Either] type.
      */
-    public actual suspend fun connect(): Either<Unit, ConnectionFailedException> {
+    public actual suspend fun connect(): Either<RedisClient, ConnectionFailedException> {
         TODO("Not yet implemented")
+        return Either.left(this)
     }
 
     /**
@@ -59,8 +60,9 @@ public actual class RedisClient {
      * it will make the [commands scope][commands] be unavailable. Any errors are be bound to the right side of
      * the returned [Either] type.
      */
-    public actual suspend fun disconnect(): Either<Unit, DisconnectionFailedException> {
+    public actual suspend fun disconnect(): Either<RedisClient, DisconnectionFailedException> {
         TODO("Not yet implemented")
+        return Either.left(this)
     }
 
     /**

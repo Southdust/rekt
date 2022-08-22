@@ -14,7 +14,6 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(rekt.lettuce.core)
-                implementation(rekt.kotlinx.coroutines.jdk8)
             }
         }
     }
