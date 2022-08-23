@@ -57,6 +57,9 @@ public inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient {
  * * **At the moment, only a few features are implemented.** Since this library is relatively new, for now there are
  *   only a few commands implemented. Of course, we are planning to increase the amount of commands, but this doesn't
  *   mean you can't implement them by your own or simply using [RedisCommandsScope.raw]!
+ * * The library depends on `stronghold-data-common`, even though it is completely unrelated to this library. We are
+ *   already working in a solution for this problem! We are developing a multiplatform common utility module only
+ *   containing required stuff for libraries like this working fine while having nifty functionalities.
  *
  *
  * ### Getting Started
