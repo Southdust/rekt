@@ -19,7 +19,6 @@ kotlin {
     }
     js(IR) {
         nodejs()
-        browser()
     }
     targets.all {
         compilations.all {

@@ -59,8 +59,7 @@ public inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient {
  *   mean you can't implement them by your own or simply using [RedisCommandsScope.raw]!
  * * The library depends on `stronghold-data-common`, even though it is completely unrelated to this library. We are
  *   already working in a solution for this problem! We are developing a multiplatform common utility module only
- *   containing required stuff for libraries like this working fine while having nifty functionalities.
- *
+ *   containing required stuff for libraries like this work fine while having nifty functionalities.
  *
  * ### Getting Started
  *
@@ -69,7 +68,8 @@ public inline fun redis(builder: RedisConfiguration.() -> Unit): RedisClient {
  *
  * To have access to the [commands scope][commands], where you use all essential Redis commands through a Kotlin
  * interface, you need to create a connection first through [connect]. Also, if the required functionality is not
- * available on our interfaces, you could use [RedisCommandsScope.raw] to run any commands that aren't exposed by yourself.
+ * available on our interfaces, you could use [RedisCommandsScope.raw] to run any commands that aren't exposed by
+ * yourself.
  *
  * @author FromSyntax
  * @author Gabriel
@@ -112,6 +112,5 @@ public expect class RedisClient {
     /**
      * All stuff that do not require an instance of [RedisClient] directly.
      */
-    public companion object {
-    }
+    public companion object
 }
