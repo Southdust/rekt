@@ -2,7 +2,6 @@
 plugins {
     alias(rekt.plugins.kotlin.multiplatform) apply false
     alias(rekt.plugins.kotlin.serialization) apply false
-    alias(rekt.plugins.dokka) apply false
 }
 
 allprojects {
